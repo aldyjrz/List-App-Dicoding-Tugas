@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.aldyjrz.mountaindo.Adapter.NewsModel;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
             pDialog.dismiss();
         }
     }
-
-    public void driverSpot() {
+    private void showRecyclerCardView() {
+        rvHeroes.layoutManager = LinearLayoutManager(this)
+        val cardViewHeroAdapter = CardViewHeroAdapter(list)
+        rvHeroes.adapter = cardViewHeroAdapter
+    }
+    public void getData() {
         showpDialog();
         final SharedPreferences prefs = getSharedPreferences("BSH", 0);
         SharedPreferences.Editor edit = prefs.edit();
@@ -72,11 +78,26 @@ public class MainActivity extends AppCompatActivity {
 
                         JSONObject jsonObject = (JSONObject) data.get(i);
                         String nama = jsonObject.getJSONObject("source").getString("name");
+                        String author = jsonObject.getString("author");
+
                         String judul = jsonObject.getString("title");
                         String deskripsi = jsonObject.getString("description");
                         String image = jsonObject.getString("urlToImage");
                         String publish = jsonObject.getString("publishedAt");
                         String content = jsonObject.getString("content");
+
+
+                        NewsModel newsModel = new NewsModel();
+                        newsModel.setSourceName(nama);
+                        newsModel.setAuthor(author);
+                        newsModel.setTitle(judul);
+                        newsModel.setDescription(deskripsi);
+                        newsModel.setImage(image);
+                        newsModel.setPublishDate(publish);
+                        newsModel.setContent(content);
+
+
+
 
                     }
                         } catch (JSONException e) {
