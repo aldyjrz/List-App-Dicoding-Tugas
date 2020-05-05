@@ -47,6 +47,6 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
         var imgPhoto: ImageView = itemView.findViewById(R.id.news_img)
         var tvTitle: TextView = itemView.findViewById(R.id.tv_news_title)
         var tvDetail: TextView = itemView.findViewById(R.id.tv_news_detail)
-        var readMore: TextView = itemView.findViewById(R.id.tv_read_more)
+        var readMore: TextView = itemView.findViewById(R.id.tv_author)
     }
 }

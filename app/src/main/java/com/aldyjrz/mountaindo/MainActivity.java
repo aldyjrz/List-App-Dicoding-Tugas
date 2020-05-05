@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Berita Kita");
         }        pDialog = new ProgressDialog(this);
+        pDialog = new ProgressDialog(this);
         pDialog.setMessage("Tunggu Sebentar...");
         pDialog.setCancelable(false);
         getData();

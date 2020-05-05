@@ -65,7 +65,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_date"
+                android:id="@+id/tv_author"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/layout_button"
@@ -78,7 +78,7 @@
                 android:maxLines="5" />
 
             <TextView
-                android:id="@+id/tv_read_more"
+                android:id="@+id/tv_author"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/layout_button"
