@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.aldyjrz.mountaindo.DetailActivity
 import com.aldyjrz.mountaindo.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -33,6 +34,12 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
         holder.author.text = news.getAuthor()
         holder.tvDate.text = news.getPublishDate()
         holder.cardView.setOnClickListener {
+            var detail = DetailActivity();
+            detail.setData(dataNews[holder.adapterPosition].getThumbnail(),
+                    dataNews[holder.adapterPosition].getAuthor(),
+                    dataNews[holder.adapterPosition].getPublishDate(),
+                    dataNews[holder.adapterPosition].getTitle(),
+                    dataNews[holder.adapterPosition].getContent())
             Toast.makeText(holder.itemView.context, "Share " + dataNews[holder.adapterPosition].getTitle(), Toast.LENGTH_SHORT).show() }
     }
 
@@ -41,6 +48,8 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
     }
 
     inner class CardViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        //inisialisasi resource dengan id masing2
         var imgPhoto: ImageView = itemView.findViewById(R.id.news_img)
         var tvTitle: TextView = itemView.findViewById(R.id.tv_news_title2)
         var tvDetail: TextView = itemView.findViewById(R.id.tv_news_detail2)

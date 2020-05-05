@@ -42,13 +42,17 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Berita Kita");
         }
-
-        pDialog = new ProgressDialog(this);
+        //deklarasi progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Tunggu Sebentar...");
+        //loading tidak bisa dibatalkan
         pDialog.setCancelable(false);
+
+
         recyclerView = findViewById(R.id.recycleview);
         recyclerView.setHasFixedSize(true);
+
+        //panggil fungsi untuk getdata dari API newsapi.org
         getData();
 
 
@@ -75,11 +79,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void getData() {
         showpDialog();
-        final SharedPreferences prefs = getSharedPreferences("BSH", 0);
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean("find_driver", true);
-        edit.apply();
-         String urlJsonArry = "http://newsapi.org/v2/top-headlines?country=id&apiKey=d31dc723e49e4caf8fedda7b8637c92c";
+
+
+        //GET Data dari API menggunakan Library Volley
+        String urlJsonArry = "http://newsapi.org/v2/top-headlines?country=id&apiKey=d31dc723e49e4caf8fedda7b8637c92c";
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET,
                 urlJsonArry, null, new Response.Listener<JSONObject>() {
             @Override

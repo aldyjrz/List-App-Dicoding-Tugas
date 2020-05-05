@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/news_img"
-        android:layout_width="220dp"
+        android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginBottom="4dp"
         android:foregroundGravity="center|center_horizontal"
@@ -19,8 +19,8 @@
         tools:src="@color/colorAccent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/news_img"
         android:orientation="vertical">
 
@@ -30,8 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/news_img"
             android:ellipsize="end"
-            android:gravity="start"
-            android:maxLines="5" />
+            android:gravity="start" />
 
         <TextView
             android:id="@+id/tv_author"
@@ -44,7 +43,18 @@
             tools:text="Aldi Pranata" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_date"
+            android:layout_marginRight="16dp"
+            android:layout_toEndOf="@id/news_img"
+            android:textStyle="bold"
+            tools:text="Isi dari berita ini tidak penuh, karena menggunakan Free API newsapi.org. Silahkan klik gambar untuk membaca berita lengkap" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tv_author" />
     </LinearLayout>
