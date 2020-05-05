@@ -37,15 +37,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_news);
+        setContentView(R.layout.activity_main);
         app = BaseApp.obtainApp(this);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Berita Kita");
-        }        pDialog = new ProgressDialog(this);
+        }
+
+        pDialog = new ProgressDialog(this);
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Tunggu Sebentar...");
         pDialog.setCancelable(false);
+        recyclerView = findViewById(R.id.recycleview);
+        recyclerView.setHasFixedSize(true);
         getData();
+
+
+
     }
 
 
@@ -77,14 +84,13 @@ public class MainActivity extends AppCompatActivity {
                 urlJsonArry, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, "Get Goresto Coordinate: " + response);
+                Log.d(TAG, "Get Data News: " + response);
 
                 try {
-                    JSONArray data = response.getJSONObject("data").getJSONArray("cards");
+                    JSONArray data = response.getJSONArray("articles");
 
 
                     for(int i = 0; i < data.length(); i++) {
-
 
                         JSONObject jsonObject = (JSONObject) data.get(i);
                         String nama = jsonObject.getJSONObject("source").getString("name");
@@ -96,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                         String publish = jsonObject.getString("publishedAt");
                         String content = jsonObject.getString("content");
 
-
                         NewsModels newsModel = new NewsModels();
                         newsModel.setSourceName(nama);
                         newsModel.setAuthor(author);
@@ -105,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
                         newsModel.setImage(image);
                         newsModel.setPublishDate(publish);
                         newsModel.setContent(content);
+                          Log.d("BERITA", newsModel.getTitle());
+                        Toast.makeText(getApplicationContext(),
+                                "Server BERITA: " + newsModel.getContent(),
+                                Toast.LENGTH_LONG).show();
+
+                        list.add(newsModel);
                         showRecyclerCardView();
 
                     }

@@ -2,8 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="5dp"
     android:background="#000000"
@@ -12,21 +13,52 @@
     card_view:cardCornerRadius="8dp"
     card_view:contentPadding="10dp">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:padding="10dp">
+    <LinearLayout
+        android:id="@+id/layout_keterangan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_keterangan"
+            android:layout_toEndOf="@id/news_img"
+            android:layout_toRightOf="@id/news_img"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:maxLines="5"
+            android:text="Aldi Pranata"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layout_keterangan"
+            android:layout_below="@id/tv_news_title2"
+            android:layout_toEndOf="@id/news_img"
+            android:layout_toRightOf="@id/news_img"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:maxLines="5"
+            android:text="Tanggal" />
 
         <ImageView
             android:id="@+id/news_img"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginBottom="4dp"
-            android:scaleType="centerCrop"
             tools:src="@color/colorAccent" />
 
         <TextView
-            android:id="@+id/tv_news_title"
+            android:id="@+id/tv_news_title2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -35,66 +67,26 @@
             android:layout_marginTop="16dp"
             android:layout_toEndOf="@id/news_img"
             android:layout_toRightOf="@id/news_img"
+            android:layout_weight="1"
+            android:textColor="#7C2626"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="@string/judul_berita" />
 
         <TextView
-            android:id="@+id/tv_news_detail"
+            android:id="@+id/tv_news_detail2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/layout_button"
-            android:layout_below="@id/tv_news_title"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layout_keterangan"
+            android:layout_below="@id/tv_news_title2"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_toEndOf="@id/news_img"
             android:layout_toRightOf="@id/news_img"
+            android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="5"
             tools:text="@string/detail_berita" />
 
-        <LinearLayout
-            android:id="@+id/layout_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/news_img"
-            android:layout_toRightOf="@id/news_img"
-            android:orientation="vertical">
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_author"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/layout_button"
-                android:layout_below="@id/tv_news_title"
-                android:layout_toEndOf="@id/news_img"
-                android:layout_toRightOf="@id/news_img"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:maxLines="5" />
-
-            <TextView
-                android:id="@+id/tv_author"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/layout_button"
-                android:layout_below="@id/tv_news_title"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_toEndOf="@id/news_img"
-                android:layout_toRightOf="@id/news_img"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="right"
-                android:maxLines="5"
-                android:textStyle="bold"
-                tools:text="@string/read_more" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
 </androidx.cardview.widget.CardView>

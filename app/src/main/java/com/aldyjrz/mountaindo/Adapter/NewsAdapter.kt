@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.aldyjrz.mountaindo.R
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
 
@@ -24,18 +24,15 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
         val news = dataNews[pos]
 
         Glide.with(holder.itemView.context)
-                .load(news.getThumbnail())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(RequestOptions().override(350, 550))
-
+                .load(news.getImage())
+                .apply(RequestOptions().override(150, 220))
                 .into(holder.imgPhoto)
 
-
         holder.tvTitle.text = news.getTitle()
-        holder.tvDetail.text = news.getDescription()
-
-
-        holder.readMore.setOnClickListener {
+        holder.tvDetail.text = news.getContent()
+        holder.author.text = news.getAuthor()
+        holder.tvDate.text = news.getPublishDate()
+        holder.cardView.setOnClickListener {
             Toast.makeText(holder.itemView.context, "Share " + dataNews[holder.adapterPosition].getTitle(), Toast.LENGTH_SHORT).show() }
     }
 
@@ -45,8 +42,10 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
 
     inner class CardViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imgPhoto: ImageView = itemView.findViewById(R.id.news_img)
-        var tvTitle: TextView = itemView.findViewById(R.id.tv_news_title)
-        var tvDetail: TextView = itemView.findViewById(R.id.tv_news_detail)
-        var readMore: TextView = itemView.findViewById(R.id.tv_author)
+        var tvTitle: TextView = itemView.findViewById(R.id.tv_news_title2)
+        var tvDetail: TextView = itemView.findViewById(R.id.tv_news_detail2)
+        var author: TextView = itemView.findViewById(R.id.tv_author)
+        var tvDate: TextView = itemView.findViewById(R.id.tv_date)
+        var cardView: CardView = itemView.findViewById(R.id.cardView)
     }
 }
