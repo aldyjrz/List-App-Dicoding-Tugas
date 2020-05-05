@@ -1,6 +1,8 @@
 package com.aldyjrz.mountaindo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -8,7 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.aldyjrz.mountaindo.Adapter.NewsModel;
+import com.aldyjrz.mountaindo.Adapter.NewsAdapter;
+import com.aldyjrz.mountaindo.Adapter.NewsModels;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,14 +32,19 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ProgressDialog pDialog;
     BaseApp app;
+    private ArrayList<NewsModels> list = new ArrayList<>();
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_news);
         app = BaseApp.obtainApp(this);
-         pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Please wait...");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Berita Kita");
+        }        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Tunggu Sebentar...");
         pDialog.setCancelable(false);
+        getData();
     }
 
 
@@ -52,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void showRecyclerCardView() {
-        rvHeroes.layoutManager = LinearLayoutManager(this)
-        val cardViewHeroAdapter = CardViewHeroAdapter(list)
-        rvHeroes.adapter = cardViewHeroAdapter
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        NewsAdapter cardViewHeroAdapter = new NewsAdapter(list);
+        recyclerView.setAdapter(cardViewHeroAdapter);
+
     }
     public void getData() {
         showpDialog();
@@ -87,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         String content = jsonObject.getString("content");
 
 
-                        NewsModel newsModel = new NewsModel();
+                        NewsModels newsModel = new NewsModels();
                         newsModel.setSourceName(nama);
                         newsModel.setAuthor(author);
                         newsModel.setTitle(judul);
@@ -95,9 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         newsModel.setImage(image);
                         newsModel.setPublishDate(publish);
                         newsModel.setContent(content);
-
-
-
+                        showRecyclerCardView();
 
                     }
                         } catch (JSONException e) {
@@ -112,16 +119,13 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("ERROR", "Can't Connect to gojek Server");
+                VolleyLog.d("ERROR", error.toString());
                 hidepDialog();
 
 
             }
         }) {
-
-
         };
-
         // Adding request to request queue
         BaseApp.getInstance().addToRequestQueue(jsonObjRequest);
     }

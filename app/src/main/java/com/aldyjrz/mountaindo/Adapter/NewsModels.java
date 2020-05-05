@@ -75,5 +75,3 @@ public class NewsModels{
     public String publishDate;
     public String content;
 }
-
-}
