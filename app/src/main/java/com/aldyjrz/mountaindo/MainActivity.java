@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.aldyjrz.mountaindo.Adapter.NewsAdapter;
@@ -29,11 +34,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
+
     private static final String TAG = "MainActivity";
     ProgressDialog pDialog;
     BaseApp app;
     private ArrayList<NewsModels> list = new ArrayList<>();
     RecyclerView recyclerView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Berita Kita");
         }
+
         //deklarasi progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Tunggu Sebentar...");
@@ -56,16 +67,34 @@ public class MainActivity extends AppCompatActivity {
         getData();
 
 
-
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
 
+            case R.id.about:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     private void showpDialog() {
         if (!pDialog.isShowing()) {
             pDialog.show();
         }
     }
+
+
+
     private void hidepDialog() {
         if (pDialog.isShowing()) {
             pDialog.dismiss();
@@ -77,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(cardViewHeroAdapter);
 
     }
+
+
     public void getData() {
         showpDialog();
 

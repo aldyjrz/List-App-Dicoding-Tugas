@@ -12,7 +12,9 @@
     android:backgroundTint="#ffffff"
     card_view:cardBackgroundColor="#313131"
     card_view:cardCornerRadius="8dp"
-    card_view:contentPadding="10dp">
+    card_view:contentPadding="10dp"
+    tools:context=".MainActivity"
+    >
 
     <LinearLayout
         android:id="@+id/layout_keterangan"

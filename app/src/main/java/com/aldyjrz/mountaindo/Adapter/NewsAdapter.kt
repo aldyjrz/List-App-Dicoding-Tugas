@@ -23,6 +23,9 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
         return CardViewViewHolder(view)
     }
 
+
+
+
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CardViewViewHolder, pos: Int) {
         val news = dataNews[pos]

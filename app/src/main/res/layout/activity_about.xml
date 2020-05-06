@@ -6,11 +6,11 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
-        android:layout_width="174dp"
-        android:layout_height="246dp"
-        app:srcCompat="@drawable/me" />
+        android:layout_width="210dp"
+        android:layout_height="289dp"
+        android:src="@drawable/me" />
 
     <TextView
         android:id="@+id/name"
