@@ -103,20 +103,20 @@ public class MainActivity extends AppCompatActivity {
                         String deskripsi = jsonObject.getString("description");
                         String image = jsonObject.getString("urlToImage");
                         String publish = jsonObject.getString("publishedAt");
+                        String link = jsonObject.getString("url");
                         String content = jsonObject.getString("content");
 
                         NewsModels newsModel = new NewsModels();
                         newsModel.setSourceName(nama);
                         newsModel.setAuthor(author);
+                        newsModel.setLink(link);
+
                         newsModel.setTitle(judul);
                         newsModel.setDescription(deskripsi);
                         newsModel.setImage(image);
                         newsModel.setPublishDate(publish);
                         newsModel.setContent(content);
                           Log.d("BERITA", newsModel.getTitle());
-                        Toast.makeText(getApplicationContext(),
-                                "Server BERITA: " + newsModel.getContent(),
-                                Toast.LENGTH_LONG).show();
 
                         list.add(newsModel);
                         showRecyclerCardView();

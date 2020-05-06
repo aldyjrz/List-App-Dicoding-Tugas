@@ -1,62 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center|center_horizontal"
-    android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/news_img"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_marginBottom="4dp"
-        android:foregroundGravity="center|center_horizontal"
-        android:scaleType="center"
-        tools:src="@color/colorAccent" />
+        app:cardCornerRadius="8dp"
+        android:layout_margin="5dp"
+        android:elevation="10dp">
 
-    <LinearLayout
+        <ImageView
+            android:id="@+id/news_img"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:foregroundGravity="center|center_horizontal"
+            android:scaleType="centerCrop"
+            tools:src="@color/colorAccent" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news_img"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:gravity="start" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_date"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:textStyle="bold"
+        tools:text="Aldi Pranata" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_author"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#8F3737"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="Aldi Pranata" />
+
+    <TextView
+        android:id="@+id/tv_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_link"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#2e3047"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        tools:text="Aldi Pranata" />
+
+    <TextView
+        android:id="@+id/tv_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:text="Isi dari berita ini tidak lengkap, karena menggunakan Free API newsapi.org. Silahkan klik gambar untuk membaca berita lengkap"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/news_img"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/news_img"
-            android:ellipsize="end"
-            android:gravity="start" />
-
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_date"
-            android:layout_marginRight="16dp"
-            android:layout_toEndOf="@id/news_img"
-            android:textStyle="bold"
-            tools:text="Aldi Pranata" />
-
-        <TextView
-            android:id="@+id/tv_warning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_date"
-            android:layout_marginRight="16dp"
-            android:layout_toEndOf="@id/news_img"
-            android:textStyle="bold"
-            tools:text="Isi dari berita ini tidak penuh, karena menggunakan Free API newsapi.org. Silahkan klik gambar untuk membaca berita lengkap" />
-
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tv_author" />
+        android:layout_below="@id/tv_warning"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp" />
     </LinearLayout>
 
-</RelativeLayout>

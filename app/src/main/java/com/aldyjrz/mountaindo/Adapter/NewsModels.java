@@ -1,22 +1,28 @@
 package com.aldyjrz.mountaindo.Adapter;
 
 public class NewsModels{
-    public String sourceName;
-    public String author;
+    public String sourceName ;
+    public String author = "Anon";
     public String title;
     public String description;
-    public String thumbnail;
-
-    public String getSourceName() {
-        return sourceName;
-    }
+    public String link;
 
     public void setSourceName(String sourceName) {
         this.sourceName = sourceName;
     }
 
+    public String getSourceName() {
+        return sourceName;
+    }
     public String getAuthor() {
         return author;
+    }
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public void setAuthor(String author) {
@@ -24,6 +30,7 @@ public class NewsModels{
     }
 
     public String getTitle() {
+
         return title;
     }
 
@@ -37,14 +44,6 @@ public class NewsModels{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
     public String getImage() {

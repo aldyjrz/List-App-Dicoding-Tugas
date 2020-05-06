@@ -1,11 +1,13 @@
 package com.aldyjrz.mountaindo.Adapter
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.aldyjrz.mountaindo.DetailActivity
@@ -21,6 +23,7 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
         return CardViewViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CardViewViewHolder, pos: Int) {
         val news = dataNews[pos]
 
@@ -30,17 +33,36 @@ class NewsAdapter(private val dataNews: ArrayList<NewsModels>) : RecyclerView.Ad
                 .into(holder.imgPhoto)
 
         holder.tvTitle.text = news.getTitle()
-        holder.tvDetail.text = news.getContent()
+        holder.tvDetail.text = news.getDescription()
         holder.author.text = news.getAuthor()
+        if(news.getAuthor().equals("null")){
+            holder.author.text = "Tidak Diketahui"
+        }
         holder.tvDate.text = news.getPublishDate()
         holder.cardView.setOnClickListener {
-            var detail = DetailActivity();
-            detail.setData(dataNews[holder.adapterPosition].getThumbnail(),
-                    dataNews[holder.adapterPosition].getAuthor(),
-                    dataNews[holder.adapterPosition].getPublishDate(),
-                    dataNews[holder.adapterPosition].getTitle(),
-                    dataNews[holder.adapterPosition].getContent())
-            Toast.makeText(holder.itemView.context, "Share " + dataNews[holder.adapterPosition].getTitle(), Toast.LENGTH_SHORT).show() }
+            val i = Intent(holder.itemView.context, DetailActivity::class.java)
+
+
+
+            val tanggal = dataNews[holder.adapterPosition].getPublishDate()
+            val img = dataNews[holder.adapterPosition].getImage()
+            val judul = dataNews[holder.adapterPosition].getTitle()
+            val link = dataNews[holder.adapterPosition].getLink()
+            val nama = dataNews[holder.adapterPosition].getAuthor()
+            val source = dataNews[holder.adapterPosition].getSourceName()
+            val konten = dataNews[holder.adapterPosition].getContent()
+
+            i.putExtra("img", img)
+            i.putExtra("nama", nama)
+            i.putExtra("source", source)
+            i.putExtra("tanggal", tanggal)
+            i.putExtra("judul", judul)
+            i.putExtra("link", link)
+            i.putExtra("konten", konten)
+
+            holder.itemView.context.startActivity(i)
+            //goto detailact
+        }
     }
 
     override fun getItemCount(): Int {

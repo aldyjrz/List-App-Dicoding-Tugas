@@ -1,89 +1,130 @@
 package com.aldyjrz.mountaindo;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aldyjrz.mountaindo.Adapter.NewsAdapter;
 import com.aldyjrz.mountaindo.Adapter.NewsModels;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 public class DetailActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    ProgressDialog pDialog;
-     String photo, authorName, date, title, content;
-    TextView tvTanggal, tvAuthor, tvKonten, tvTitle;
+     ProgressDialog pDialog;
+     String photo, authorName, date, title, content, link;
+    TextView tvTanggal, tvAuthor, tvKonten, tvTitle, tvLink;
     ImageView imgPhoto;
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_detail);
 
         initialRes();
-        if(!photo.isEmpty()){
+
+        title = getIntent().getStringExtra("judul");
 
             //Mengubah title menjadi judul berita
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(title);
-            }
-            hidepDialog();
 
-            //memasukan text ke textview dari data yang didapatkan dari setData()
-            tvTanggal.setText(date);
-            tvAuthor.setText(authorName);
-            tvKonten.setText(content);
-            tvTitle.setText(title);
+        showpDialog();
 
-            //menampilkan gambar dari url string yang didapat
-            Glide.with(getApplicationContext())
-                    .load(photo)
-                    .apply(new RequestOptions().override(150, 220))
-                    .into(imgPhoto);
+        String[] getJudul = title.split("- ");
+        Log.d("getjudul", getJudul[1]);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getJudul[1]);
+        }
+        tvLink.setText(getIntent().getStringExtra("link"));
+        tvTanggal.setText(getIntent().getStringExtra("tanggal"));
+        tvTitle.setText(getIntent().getStringExtra("judul"));
 
+        String konten = getIntent().getStringExtra("konten");
+        if(konten.equals("null")){
+            konten = "Silahkan klik Gambar Untuk Membaca Berita";
         }
 
+        String nama = getIntent().getStringExtra("nama");
+        if(nama.equals("null")){
+            nama = getJudul[1];
+        }
+        tvAuthor.setText(nama);
+
+        tvKonten.setText(konten);
+        String gambar = getIntent().getStringExtra("img");
+
+
+        tvLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getIntent().getStringExtra("link"))));
+            }
+        });
+        Glide.with(getApplicationContext())
+                .load(gambar)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                         hidepDialog();
+
+                        Toast.makeText(getApplicationContext(), "Gambar gagal ditampilkan", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        hidepDialog();
+                        return false;
+                    }
+                })
+                .into(imgPhoto);
+
+
+        imgPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getIntent().getStringExtra("link"))));
+            }
+        });
 
 
     }
+
+
+
     void initialRes(){
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Tunggu Sebentar...");
         pDialog.setCancelable(false);
         tvTanggal = findViewById(R.id.tv_date);
         tvAuthor = findViewById(R.id.tv_author);
-        tvKonten = findViewById(R.id.tv_news_detail2);
-        tvTitle = findViewById(R.id.tv_news_title2);
+        tvKonten = findViewById(R.id.content);
+        tvTitle = findViewById(R.id.tv_title);
         imgPhoto = findViewById(R.id.news_img);
+        tvLink = findViewById(R.id.tv_link);
         showpDialog();
 
     }
 
     //method untuk load data yang dipanggil dari adapter
-    public void setData(String foto, String nama, String tanggal, String judul, String konten){
-        this.photo = foto;
-        this.authorName = nama;
-        this.date = tanggal;
-        this.title = judul;
-        this.content = konten;
-    }
+
     private void showpDialog() {
         if (!pDialog.isShowing()) {
             pDialog.show();
