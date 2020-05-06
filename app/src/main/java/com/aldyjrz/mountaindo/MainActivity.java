@@ -3,27 +3,23 @@ package com.aldyjrz.mountaindo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
+ import android.os.Bundle;
+ import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.aldyjrz.mountaindo.Adapter.NewsAdapter;
 import com.aldyjrz.mountaindo.Adapter.NewsModels;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
+ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
 
     private static final String TAG = "MainActivity";
@@ -41,11 +37,10 @@ public class MainActivity extends AppCompatActivity {
     BaseApp app;
     private ArrayList<NewsModels> list = new ArrayList<>();
     RecyclerView recyclerView;
-
-
+    SwipeRefreshLayout mswipeRefreshLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         app = BaseApp.obtainApp(this);
@@ -59,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
         //loading tidak bisa dibatalkan
         pDialog.setCancelable(false);
 
-
+        mswipeRefreshLayout = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.recycleview);
         recyclerView.setHasFixedSize(true);
 
         //panggil fungsi untuk getdata dari API newsapi.org
         getData();
-
+        mswipeRefreshLayout.setOnRefreshListener(this);
 
     }
 
@@ -147,22 +142,22 @@ public class MainActivity extends AppCompatActivity {
                         newsModel.setImage(image);
                         newsModel.setPublishDate(publish);
                         newsModel.setContent(content);
-                          Log.d("BERITA", newsModel.getTitle());
+                        Log.d("BERITA", newsModel.getTitle());
 
                         list.add(newsModel);
                         showRecyclerCardView();
 
                     }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(),
-                                    "Server Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),
+                            "Server Error: " + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
 
-                        hidepDialog();
-                    }
-                }, new Response.ErrorListener() {
+                hidepDialog();
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("ERROR", error.toString());
@@ -176,4 +171,9 @@ public class MainActivity extends AppCompatActivity {
         BaseApp.getInstance().addToRequestQueue(jsonObjRequest);
     }
 
+    @Override
+    public void onRefresh() {
+        getData();
+        mswipeRefreshLayout.setRefreshing(false);
+    }
 }
